@@ -42,6 +42,11 @@ fun weatherrequest(){
     println(response.body())
 }
 
+/*val map = geo.split(",").associate {
+    val (left, right) = it.split("=")
+    left to right.toInt()
+}*/
+
 var city : String = "Moscow"
 var geo : String = "N|S"
 var lang = "english"
