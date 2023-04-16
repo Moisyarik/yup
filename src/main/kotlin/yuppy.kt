@@ -28,18 +28,40 @@ fun georequest(){
 
     val response = client.send(request, HttpResponse.BodyHandlers.ofString());
     geo = response.body()
-    println(response.body())
+    //println(response.body())
+    val geomap = geo.split(",").associate {
+        val (left, right) = it.split(":")
+        left to right.toString()
+    }
+    //print(geomap)
+    val latstr = geomap.get("\"lat\"")
+    val lonstr = geomap.get("\"lon\"")
+    lat = latstr?.toDouble()
+    lon = lonstr?.toDouble()
 }
 
 fun weatherrequest(){
     georequest()
     val client = HttpClient.newBuilder().build();
     val request = HttpRequest.newBuilder()
-        .uri(URI.create("http://api.openweathermap.org/data/2.5/weather?lat=$geo&lang=$lang&appid=4e968e41a1054c130648695150446377")) //set lat!
+        .uri(URI.create("http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&lang=$lang&appid=4e968e41a1054c130648695150446377")) //set lat!
         .build();
 
     val response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    println(response.body())
+    //println(response.body())
+    weather = response.body()
+    val weathermap = weather.split(",").associate {
+        val (left, right) = it.split(":")
+        left to right.toString()
+    }
+    //print(geomap)
+    val tempstr = weathermap.get("\"temp_max\"")
+    val temp = tempstr?.toDouble()?.minus(273.0)
+    val feels_likestr = weathermap.get("\"feels_like\"")
+    val feels_like = feels_likestr?.toDouble()?.minus(273.0)
+    val humidity = weathermap.get("\"humidity\"")
+    val windspeed = weathermap.get("\"speed\"")
+    println("Температура $temp. Ощущается как $feels_like. Влажность воздуха - $humidity%")
 }
 
 /*val map = geo.split(",").associate {
@@ -47,6 +69,10 @@ fun weatherrequest(){
     left to right.toInt()
 }*/
 
+
+var weather : String = ""
+var lat : Double? = 0.0
+var lon : Double? = 0.0
 var city : String = "Moscow"
 var geo : String = "N|S"
 var lang = "english"

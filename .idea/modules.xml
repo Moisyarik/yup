@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/yup.iml" filepath="$PROJECT_DIR$/yup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/yuppy.iml" filepath="$PROJECT_DIR$/yuppy.iml" />
     </modules>
   </component>
 </project>
